@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -13,8 +14,10 @@ type Link struct {
 }
 
 func main() {
+	filename := flag.String("file", "ex1.html", "html file name")
+	flag.Parse()
 
-	file, err := os.Open("ex1.html")
+	file, err := os.Open(*filename)
 	if err != nil {
 		panic(err)
 	}
