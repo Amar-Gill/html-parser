@@ -55,6 +55,7 @@ func parseHref(n *html.Node) string {
 	for _, att := range n.Attr {
 		if att.Key == "href" {
 			v = att.Val
+			break
 		}
 	}
 	return v
