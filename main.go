@@ -35,18 +35,16 @@ func main() {
 
 		if n.Type == html.ElementNode && n.Data == "a" {
 			hrefString = parseHref(n)
+			text = parseText(n, text)
+			link = Link{hrefString, text}
+			links = append(links, link)
 		}
 
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			if c.Type == html.TextNode {
-				text += c.Data
-			}
 			f(c)
 		}
-
-		link = Link{hrefString, text}
-		links = append(links, link)
 	}
+
 	f(doc)
 
 	fmt.Printf("%v", links)
@@ -62,13 +60,13 @@ func parseHref(n *html.Node) string {
 	return v
 }
 
-// func parseText(n *html.Node, s string) string {
+func parseText(n *html.Node, s string) string {
 
-// 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-// 		if c.Type == html.TextNode {
-// 			s += c.Data
-// 		}
-// 		s += parseText(c, s)
-// 	}
-// 	return s
-// }
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		if c.Type == html.TextNode {
+			s += c.Data
+		}
+		s = parseText(c, s)
+	}
+	return s
+}
