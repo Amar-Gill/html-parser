@@ -32,14 +32,11 @@ func main() {
 
 	var f func(*html.Node)
 	f = func(n *html.Node) {
-		var link Link
-		hrefString := ""
-		text := ""
 
 		if n.Type == html.ElementNode && n.Data == "a" {
-			hrefString = parseHref(n)
-			text = parseText(n, text)
-			link = Link{hrefString, text}
+			hrefString := parseHref(n)
+			text := parseText(n, "")
+			link := Link{hrefString, text}
 			links = append(links, link)
 		}
 
