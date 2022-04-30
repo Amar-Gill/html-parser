@@ -1,9 +1,7 @@
-package main
+package linkParser
 
 import (
-	"flag"
-	"fmt"
-	"os"
+	"io"
 
 	"golang.org/x/net/html"
 )
@@ -13,24 +11,15 @@ type Link struct {
 	Text string
 }
 
-func main() {
-	filename := flag.String("file", "ex1.html", "html file name")
-	flag.Parse()
-
-	file, err := os.Open(*filename)
+func ParseLinks(r io.Reader) ([]Link, error) {
+	doc, err := html.Parse(r)
 	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	doc, err := html.Parse(file)
-	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	links := make([]Link, 0)
-
 	var f func(*html.Node)
+
 	f = func(n *html.Node) {
 
 		if n.Type == html.ElementNode && n.Data == "a" {
@@ -47,7 +36,7 @@ func main() {
 
 	f(doc)
 
-	fmt.Printf("%v", links)
+	return links, nil
 }
 
 func parseHref(n *html.Node) string {
