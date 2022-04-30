@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/amar-gill/link-parser"
+	"github.com/amar-gill/linkparser"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()	
+	defer file.Close()
 
 	links, err := linkparser.ParseLinks(file)
 	if err != nil {

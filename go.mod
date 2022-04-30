@@ -1,4 +1,4 @@
-module github.com/amar-gill/link-parser
+module github.com/amar-gill/linkparser
 
 go 1.18
 
